@@ -6,6 +6,10 @@ Below is the list of [participants](GOVERNANCE.md#1-roles) in the SDLC Common Co
 - Name, organization, Date of enrollment: MMM/DD/YYYY
 - Alex Kantor, Kosli, Sep/28/2026
 - Aaron Searle, Morgan Stanley, Sep/28/2026
+- Sandeep Chakravartty, Infosys Limites, Sep/28/2026
+- Ricardo Sueiras, Indicium AI, Sep/28/2026
+- Marko Bevc, Kosli, Sep/28/2026
+- Paul Cavanagh, Adaptavist, Sep/28/2026
 -  
 - 
 - 
