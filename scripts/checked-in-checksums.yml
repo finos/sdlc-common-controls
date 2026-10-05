@@ -2,6 +2,7 @@
 # unrecorded edit (including after a regen script runs) — see scripts_docs/RUNBOOK.md.
 # Regenerate after any intentional change: scripts/readiness-check --update-checksums
 eu-ai-act.yml: 098adf66f123e66529777c100af8a1305166b6d2412057530b24ace1d882ae08
+eu-dora.yml: 3d387b583522a3776f2e652f28133fa8b317fffdd19ec9294fea6a15375c878a
 ffiec-itbooklets.yml: 665c36d1a3fd8f631aa632996d1ea279099bf5f2deceb9ef037cc71ee3cf27e3
 iso-42001.yml: 4b756ad26b0215b75984af7354556f30992b423db6ccdfc56bdb7cec9c2c94b7
 iso-iec-27002.yml: b03620529243b8c06f50a0138cdf4493045fa17f3acb9a49639cb9e8493d5b83
@@ -11,3 +12,5 @@ nist-ssdf.yml: 2b012348cb94fca74d9fec4ef85ec79a5c83639111a9b8fa90ed616e2a12a673
 owasp-llm.yml: aa70e0db401ffef3eb2d82bf0c19181b265d300f96a62ee867d1957e5c2be3b6
 owasp-ml.yml: e19b89bea8c88823faf57cca71d8035775551626f888eb2d69376c22777c2779
 slsa.yml: 3dd7e9c97a3bfebb98f298c631f54adf93757e4fa23374dd14dff0724f751bbf
+uk-fca.yml: 6075beb63865b0b745e86777119d019bffa0513215a57eb5a8b4f4dbaec85383
+us-nydfs.yml: 332a4fa27fdfb5e464020ff8fb5662dd2960feb36f879e68b733d8e1fa69c3d8
