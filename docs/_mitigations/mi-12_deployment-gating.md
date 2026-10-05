@@ -17,6 +17,7 @@ mitigates:
   - ri-4   # Vulnerable Software in Production
   - ri-9   # Environment Breach
 related_mitigations:
+  - mi-19  # Version Release Approval Gating
   - mi-5   # Vulnerability Scanning - SAST
   - mi-6   # Vulnerability Scanning - DAST
   - mi-7   # Vulnerability Scanning - Dependencies
@@ -34,13 +35,13 @@ Deployment gating blocks promotion of software to the target environment when de
 
 Deployment gating enforces policy-based decisions at the point of deployment to ensure that only software meeting defined control criteria is promoted to production. Gates evaluate the posture of an artefact against the organisation's defined policies and block deployment when criteria are not met. Without deployment gates, other controls in the catalog are advisory only, and non-compliant software may reach the target environment despite known issues. In regulated financial services environments, deployment gating provides auditable evidence that organisational policy was enforced at every release.
 
+Deployment gating evaluates the current technical posture of an artefact at each deployment event — the same version can pass today and be blocked tomorrow as new findings emerge, scans age, or remediation timelines are breached. Whether the version itself has received organisational approval is governed by version release approval gating ([mi-19]({% link _mitigations/mi-19_version-approval.md %})); that approval state is one of the conditions a deployment gate verifies.
+
 ## Requirements
 
 * Deployment gating policies MUST be defined to specify which conditions block deployment, based on the organisation's risk appetite and regulatory requirements
 * Gating policies MUST be configurable per application or service to allow organisations to tailor risk thresholds (e.g., stricter policies for internet-facing applications, adjusted thresholds for internal tools)
-* A documented override and emergency deployment process MUST exist for situations where deployment is critical despite unmet gate conditions. Overrides MUST require approval from an appropriate authority, include documented justification, and be time-bound
-* Overrides MUST be logged and auditable, including who approved, the justification, and the conditions that were bypassed
-* Gate evaluation results — including pass/fail status, which checks were evaluated, and any overrides — MUST be retained as part of the deployment record
+* Gate evaluation results — including pass/fail status and which checks were evaluated — MUST be retained as part of the deployment record
 * Gating policies MUST be reviewed and updated at least annually, or when significant changes to the threat landscape, regulatory requirements, or technology stack occur
 
 ## Examples & Commentary
@@ -48,9 +49,8 @@ Deployment gating enforces policy-based decisions at the point of deployment to 
 * **Policy Examples:** An organisation might define the following deployment gates: no new critical or high SAST findings; no critical CVEs in dependencies without an approved waiver; DAST scan completed within the last 14 days; no secrets detected in the codebase. The specific policies will vary by organisation and risk appetite
 * **Pipeline Enforcement:** Implement gates as required steps in the CI/CD pipeline. For example, a deployment job queries the vulnerability management platform for the artefact's security posture and proceeds only if all gate conditions are satisfied
 * **Graduated Policies:** Apply different gate strictness by environment and application criticality. A development environment might allow deployment with medium findings, while production for a customer-facing application blocks on anything high or above
-* **Emergency Overrides:** Define an emergency deployment process for genuinely urgent situations (e.g., a critical production outage fix). The override should require real-time approval from a security lead or on-call manager, be time-limited, and automatically create a follow-up ticket to address the bypassed condition
 * **Visibility & Feedback:** When a deployment is blocked, provide clear and actionable feedback to the engineering team: which gate failed, what findings caused the failure, and what actions are needed to proceed. Poor feedback loops lead to frustration and incentivise workarounds
-* **Relationship to Remediation SLAs:** Deployment gating works hand-in-hand with Remediation SLAs ([SDLC-PREV-011]({% link _mitigations/mi-11_vulnerability-remediation-slas.md %})). SLAs define *when* findings must be remediated; gates enforce that deployments cannot proceed when those timelines are breached. For example, a high-severity SAST finding with a 7-day SLA may not block deployment on day 1, but will block it on day 8 if unresolved
+* **Relationship to Remediation SLAs:** Deployment gating works hand-in-hand with Remediation SLAs ([mi-11]({% link _mitigations/mi-11_vulnerability-remediation-slas.md %})). SLAs define *when* findings must be remediated; gates enforce that deployments cannot proceed when those timelines are breached. For example, a high-severity SAST finding with a 7-day SLA may not block deployment on day 1, but will block it on day 8 if unresolved
 
 ## Links
 
