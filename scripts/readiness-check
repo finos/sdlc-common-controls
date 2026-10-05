@@ -71,23 +71,11 @@ CHECKSUMS_FILE = SCRIPT_DIR / "checked-in-checksums.yml"
 RISK_HEADINGS = {"## Summary", "## Description", "### Consequences", "## Links"}
 MITIGATION_HEADINGS = {"## Summary", "## Description", "## Requirements", "## Links"}
 
-REGULATORY_REF_FIELDS = [
-    "eu-ai-act_references",
-    "ffiec-itbooklets_references",
-    "iso-42001_references",
-    "iso-iec-27002_references",
-    "nist-ai-600-1_references",
-    "nist-sp-800-53r5_references",
-    "nist-ssdf_references",
-    "owasp-llm_references",
-    "owasp-ml_references",
-    "slsa_references",
-]
-
 # Maps each dataset name to the make target that generates it.
 # None means the dataset is hand-maintained — see scripts_docs/RUNBOOK.md.
 DATA_MAKE_TARGETS: dict[str, str | None] = {
     "eu-ai-act":           "make data-eu-ai-act",
+    "eu-dora":             None,  # contributed; no generator script
     "ffiec-itbooklets":    None,  # source now requires solving a CAPTCHA; file is hand-maintained
     "iso-42001":           None,  # contributed; standard text is paywalled
     "iso-iec-27002":       None,  # contributed; standard text is paywalled
@@ -97,18 +85,29 @@ DATA_MAKE_TARGETS: dict[str, str | None] = {
     "owasp-llm":           "make data-owasp",
     "owasp-ml":            "make data-owasp",
     "slsa":                None,  # contributed; spec is versioned web pages
+    "uk-fca":              None,  # contributed; no generator script
+    "us-nydfs":            None,  # contributed; no generator script
 }
+
 # Every dataset is checksummed against CHECKSUMS_FILE, so an accidental
 # deletion or unrecorded edit is always caught — including files regenerated
 # by a make target, since regeneration should also refresh the recorded
 # checksum via --update-checksums.
 
+# A document counts as carrying regulatory references if it has any of these
+# frontmatter fields. Derived from the dataset registry above so the two
+# cannot disagree. A dataset with no registry entry is still ignored.
+REGULATORY_REF_FIELDS = [f"{dataset}_references" for dataset in sorted(DATA_MAKE_TARGETS)]
+
 HAND_MAINTAINED_NOTES = {
+    "eu-dora":          "no generator script; entries are curated by hand",
     "ffiec-itbooklets": "source returns a CAPTCHA challenge to automated requests",
     "iso-42001":        "standard text is paywalled",
     "iso-iec-27002":    "standard text is paywalled",
     "nist-ssdf":        "published as a single PDF with no per-practice anchors",
     "slsa":             "specification is versioned web pages, maintained by hand",
+    "uk-fca":           "no generator script; entries are curated by hand",
+    "us-nydfs":         "no generator script; entries are curated by hand",
 }
 
 PASS = "✅"

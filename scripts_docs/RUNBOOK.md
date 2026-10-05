@@ -26,6 +26,11 @@ automated requests, so the script no longer works. Treat this file as
 hand-maintained until source access is restored; update entries manually if
 the FFIEC IT Handbook changes.
 
+### `docs/_data/eu-dora.yml`, `docs/_data/uk-fca.yml` and `docs/_data/us-nydfs.yml`
+
+The EU, UK and US financial-regulation datasets. Contributed, with no
+generator script. Each entry is a title and a URL.
+
 ## Generated Artifacts
 
 ### `docs/_data/eu-ai-act.yml`
