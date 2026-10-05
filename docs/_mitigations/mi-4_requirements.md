@@ -1,5 +1,6 @@
 ---
 sequence: 4
+version: "0.1"
 title: Requirements Repository
 layout: mitigation
 doc-status: Draft
@@ -13,7 +14,6 @@ related_mitigations:
   - mi-8   # Version Control
   - mi-20  # Requirements Approval for Release
 ---
-
 ## Summary
 
 Requirements Repository ensures that every application records its requirements in a designated and approved system of record. 

@@ -1,0 +1,94 @@
+---
+layout: default
+---
+
+{% comment %}
+  Renders an immutable, historic snapshot of a card (mitigation or risk) at a
+  sliced version. Generated snapshots live in the _versions collection and set:
+    ref, ref_collection, source_layout, snapshot_version, snapshot_date,
+    snapshot_commit, source_sha256
+{% endcomment %}
+
+{% comment %} Find the current live version of this card so we can link to it. {% endcomment %}
+{% assign all_for_ref = site.versions | where: "ref", page.ref | sort: "snapshot_version" | reverse %}
+{% assign latest = all_for_ref | first %}
+{% if page.ref_collection == "mitigations" %}
+  {% assign live = site.mitigations | where: "sequence", page.sequence | first %}
+{% else %}
+  {% assign live = site.risks | where: "sequence", page.sequence | first %}
+{% endif %}
+{% assign is_latest = false %}
+{% if latest.snapshot_version == page.snapshot_version %}{% assign is_latest = true %}{% endif %}
+
+<header class="py-5 bg-light border-bottom">
+    <div class="container">
+        <div class="mb-4">
+            <a href="{{ site.baseurl }}/" class="text-decoration-none">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                </svg>
+                Back to Catalog
+            </a>
+        </div>
+
+        <div class="mb-2 text-uppercase small fw-bold text-muted">
+            {{ page.ref }} &middot; version {{ page.snapshot_version }}
+        </div>
+        <div class="d-flex align-items-center">
+            <img src="{{ site.baseurl }}/logo_horizontal.svg" alt="SDLC Common Controls Catalog logo" style="height: 72px;" class="me-3 mb-0">
+            <div>
+                <h1 class="display-4 mb-0">{{ page.title }}</h1>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="container py-5">
+
+    {% comment %} Historic-version banner. {% endcomment %}
+    <div class="alert {% if is_latest %}alert-info{% else %}alert-warning{% endif %} d-flex align-items-start" role="alert">
+        <i class="bi bi-clock-history me-2 fs-5"></i>
+        <div>
+            {% if is_latest %}
+            You are viewing <strong>version {{ page.snapshot_version }}</strong>, the latest sliced
+            version of this {{ page.ref_collection | remove: "s" }}.
+            {% else %}
+            You are viewing <strong>historic version {{ page.snapshot_version }}</strong> of this
+            {{ page.ref_collection | remove: "s" }}. This is a frozen snapshot and may be out of date.
+            {% endif %}
+            {% if live %}
+            View the <a href="{{ live.url | prepend: site.baseurl }}" class="alert-link">current version</a>.
+            {% endif %}
+            <div class="small text-muted mt-1">
+                Sliced {{ page.snapshot_date }} from commit <code>{{ page.snapshot_commit }}</code>.
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card mb-4">
+                <div class="card-body">
+                    {{ content }}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            {% include version-history.html ref=page.ref current=page.snapshot_version %}
+
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h2 class="h4 mb-3">Snapshot Details</h2>
+                    <dl class="row mb-0 small">
+                        <dt class="col-5">Card</dt><dd class="col-7">{{ page.ref }}</dd>
+                        <dt class="col-5">Version</dt><dd class="col-7">{{ page.snapshot_version }}</dd>
+                        <dt class="col-5">Status</dt><dd class="col-7">{{ page['doc-status'] }}</dd>
+                        <dt class="col-5">Sliced</dt><dd class="col-7">{{ page.snapshot_date }}</dd>
+                        <dt class="col-5">Commit</dt><dd class="col-7"><code>{{ page.snapshot_commit }}</code></dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

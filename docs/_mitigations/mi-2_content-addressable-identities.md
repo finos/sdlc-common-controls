@@ -1,5 +1,6 @@
 ---
 sequence: 2
+version: "0.1"
 title: Content Addressable Identities
 layout: mitigation
 doc-status: Draft
@@ -21,7 +22,6 @@ related_mitigations:
   - mi-1   # Peer Source Code Review
   - mi-22  # Data Retention and Disposal
 ---
-
 ## Summary
 
 Where a control's evidence refers to the subject it is evidence about, that reference must be a cryptographic hash of the subject's content, so that the binding between evidence and subject cannot be broken after the fact.

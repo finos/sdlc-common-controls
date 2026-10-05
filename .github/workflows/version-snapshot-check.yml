@@ -1,0 +1,41 @@
+name: Version Snapshot Check
+
+# Enforces that every mitigation/risk card has a snapshot for its current
+# version, and that already-sliced versions have not been changed in place.
+# If a card's content changed, its `version` must be bumped and a fresh
+# snapshot committed (see scripts_docs/README.md -> version-snapshot).
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+    paths:
+      - "docs/_mitigations/**"
+      - "docs/_risks/**"
+      - "docs/_versions/**"
+      - "scripts/version-snapshot"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  version-snapshot-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
+      - name: Install script dependency
+        run: python -m pip install PyYAML
+
+      - name: Verify version snapshots
+        run: python3 scripts/version-snapshot --check

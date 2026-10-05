@@ -1,0 +1,293 @@
+#!/usr/bin/env python3
+"""
+Version Snapshot for SDLC Controls Framework
+
+Materialises an immutable, per-card version history into a Jekyll collection,
+so every mitigation and risk can be queried and displayed by its version — all
+inside the repository, with no database.
+
+How it works
+------------
+Each card (docs/_mitigations/*.md, docs/_risks/*.md) carries a single authored
+field in its front matter:
+
+    version: "0.1"
+
+When you want to "slice" a new version you bump that one line and run this
+script. For every card whose current version has no stored snapshot, the script
+writes a verbatim copy into docs/_versions/<id>-v<version>.md, stamped with the
+slice date, the current git commit, and a hash of the source content. Snapshots
+are generated artefacts — never hand-edit them.
+
+Because snapshots are plain Markdown committed to the repo, they are diffable,
+reviewable, and rendered statically by Jekyll (GitHub Pages friendly). Git
+remains the underlying source of truth: each snapshot records the commit it was
+sliced from.
+
+Immutability
+------------
+A sliced version is frozen. If a card's body changes but its version was not
+bumped, the stored snapshot for that version would no longer match the source.
+`--check` detects this drift and fails, so CI can require either a version bump
+or a restore before merge.
+
+Usage
+-----
+    ./scripts/version-snapshot                 # materialise any new versions
+    ./scripts/version-snapshot --check         # CI: verify snapshots are current
+    ./scripts/version-snapshot --init          # add version: "0.1" where missing
+    ./scripts/version-snapshot --init 1.0      # ... with a different default
+    ./scripts/version-snapshot --files docs/_mitigations/mi-1_code-review.md
+
+Dependencies: PyYAML  (pip install pyyaml)
+"""
+
+import argparse
+import hashlib
+import re
+import subprocess
+import sys
+from datetime import date
+from pathlib import Path
+
+import yaml
+
+REPO_ROOT = Path(__file__).resolve().parent.parent
+DOCS = REPO_ROOT / "docs"
+VERSIONS_DIR = DOCS / "_versions"
+
+# Collections that carry versionable cards, mapped to their id prefix.
+COLLECTIONS = {
+    "mitigations": {"dir": DOCS / "_mitigations", "prefix": "mi"},
+    "risks": {"dir": DOCS / "_risks", "prefix": "ri"},
+}
+
+DEFAULT_VERSION = "0.1"
+
+FRONT_MATTER_RE = re.compile(r"^---\s*\n(.*?)\n---\s*\n?(.*)$", re.DOTALL)
+
+
+# ---------------------------------------------------------------------------
+# Front matter helpers (text-preserving — we only ever inject a few lines so
+# the authored YAML, including its inline comments, survives untouched).
+# ---------------------------------------------------------------------------
+def split_front_matter(text: str) -> tuple[str, str]:
+    """Return (front_matter_text, body). Raises if no front matter."""
+    m = FRONT_MATTER_RE.match(text)
+    if not m:
+        raise ValueError("no YAML front matter found")
+    return m.group(1), m.group(2)
+
+
+def parse_front_matter(front: str) -> dict:
+    try:
+        return yaml.safe_load(front) or {}
+    except yaml.YAMLError as exc:
+        raise ValueError(f"invalid YAML front matter: {exc}") from exc
+
+
+def source_hash(front_fm: dict, body: str) -> str:
+    """Stable hash of the parts of a card that define a version's content.
+
+    Uses the parsed front matter (so comment/formatting-only edits do not count
+    as content drift) plus the verbatim body.
+    """
+    # version/snapshot bookkeeping keys must not feed the content hash.
+    ignore = {"version"}
+    relevant = {k: v for k, v in front_fm.items() if k not in ignore}
+    canonical = yaml.safe_dump(relevant, sort_keys=True, default_flow_style=False)
+    h = hashlib.sha256()
+    h.update(canonical.encode("utf-8"))
+    h.update(b"\x00")
+    h.update(body.strip().encode("utf-8"))
+    return h.hexdigest()
+
+
+def git_commit() -> str:
+    try:
+        out = subprocess.run(
+            ["git", "rev-parse", "--short", "HEAD"],
+            cwd=REPO_ROOT,
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        return out.stdout.strip()
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        return "unknown"
+
+
+# ---------------------------------------------------------------------------
+# Card discovery
+# ---------------------------------------------------------------------------
+class Card:
+    def __init__(self, path: Path, collection: str, prefix: str):
+        self.path = path
+        self.collection = collection
+        text = path.read_text(encoding="utf-8")
+        self.front_text, self.body = split_front_matter(text)
+        self.fm = parse_front_matter(self.front_text)
+        seq = self.fm.get("sequence")
+        if seq is None:
+            raise ValueError(f"{path.name}: missing 'sequence'")
+        self.id = f"{prefix}-{seq}"
+        self.version = self.fm.get("version")
+        self.title = self.fm.get("title", self.id)
+
+    @property
+    def hash(self) -> str:
+        return source_hash(self.fm, self.body)
+
+    def snapshot_path(self, version=None) -> Path:
+        v = version if version is not None else self.version
+        return VERSIONS_DIR / f"{self.id}-v{v}.md"
+
+
+def discover(files=None) -> list[Card]:
+    cards = []
+    for name, meta in COLLECTIONS.items():
+        for path in sorted(meta["dir"].glob("*.md")):
+            if files and path.resolve() not in files:
+                continue
+            try:
+                cards.append(Card(path, name, meta["prefix"]))
+            except ValueError as exc:
+                print(f"  ! {path.relative_to(REPO_ROOT)}: {exc}", file=sys.stderr)
+    return cards
+
+
+# ---------------------------------------------------------------------------
+# Snapshot writing
+# ---------------------------------------------------------------------------
+def build_snapshot(card: Card) -> str:
+    """Produce the snapshot file text: verbatim card with injected metadata.
+
+    The authored front matter is preserved line-for-line (inline comments and
+    all), except the `layout:` line, which is dropped so we can set the
+    dedicated version layout without creating a duplicate YAML key. The card's
+    original layout is retained separately as `source_layout`.
+    """
+    source_layout = card.fm.get("layout", card.collection)
+    kept_lines = [
+        line for line in card.front_text.split("\n")
+        if not re.match(r"^layout\s*:", line)
+    ]
+    injected = [
+        "# generated by scripts/version-snapshot; do not edit by hand",
+        "layout: version",
+        f"ref: {card.id}",
+        f"ref_collection: {card.collection}",
+        f"source_layout: {source_layout}",
+        f'snapshot_version: "{card.version}"',
+        f"snapshot_date: {date.today().isoformat()}",
+        f"snapshot_commit: {git_commit()}",
+        f"source_sha256: {card.hash}",
+    ]
+    front = "\n".join(kept_lines).rstrip("\n") + "\n" + "\n".join(injected)
+    return f"---\n{front}\n---\n{card.body}"
+
+
+def materialise(cards: list[Card]) -> int:
+    VERSIONS_DIR.mkdir(parents=True, exist_ok=True)
+    written = 0
+    for card in cards:
+        if not card.version:
+            print(f"  - {card.id}: no version field, skipping (run --init)")
+            continue
+        dest = card.snapshot_path()
+        if dest.exists():
+            continue
+        dest.write_text(build_snapshot(card), encoding="utf-8")
+        print(f"  + sliced {card.id} v{card.version} -> {dest.relative_to(REPO_ROOT)}")
+        written += 1
+    if not written:
+        print("  nothing to slice — all current versions already snapshotted")
+    return written
+
+
+def check(cards: list[Card]) -> int:
+    """Return number of problems found (0 == clean)."""
+    problems = 0
+    for card in cards:
+        if not card.version:
+            print(f"  ! {card.id}: missing 'version' field")
+            problems += 1
+            continue
+        dest = card.snapshot_path()
+        if not dest.exists():
+            print(f"  ! {card.id}: v{card.version} has no snapshot — run 'make snapshot'")
+            problems += 1
+            continue
+        snap_text = dest.read_text(encoding="utf-8")
+        front, _ = split_front_matter(snap_text)
+        snap_fm = parse_front_matter(front)
+        stored = snap_fm.get("source_sha256")
+        if stored != card.hash:
+            print(
+                f"  ! {card.id}: content changed since v{card.version} was sliced.\n"
+                f"      Bump the version (and run 'make snapshot'), or restore the card."
+            )
+            problems += 1
+    if not problems:
+        print(f"  OK — {len(cards)} cards, all versions snapshotted and unchanged")
+    return problems
+
+
+def init(cards: list[Card], default: str) -> int:
+    """Add a version field to cards that lack one. Edits the source files."""
+    changed = 0
+    for card in cards:
+        if card.version:
+            continue
+        # Insert `version: "x"` right after the sequence line to keep it tidy.
+        lines = card.front_text.split("\n")
+        out, inserted = [], False
+        for line in lines:
+            out.append(line)
+            if not inserted and re.match(r"^sequence\s*:", line):
+                out.append(f'version: "{default}"')
+                inserted = True
+        if not inserted:  # no sequence line matched; prepend
+            out.insert(0, f'version: "{default}"')
+        new_front = "\n".join(out)
+        card.path.write_text(f"---\n{new_front}\n---\n{card.body}", encoding="utf-8")
+        print(f"  + {card.id}: version \"{default}\"")
+        changed += 1
+    if not changed:
+        print("  all cards already have a version")
+    return changed
+
+
+# ---------------------------------------------------------------------------
+# CLI
+# ---------------------------------------------------------------------------
+def main() -> int:
+    ap = argparse.ArgumentParser(description="Materialise per-card version snapshots.")
+    mode = ap.add_mutually_exclusive_group()
+    mode.add_argument("--check", action="store_true",
+                      help="verify snapshots exist and are unchanged (CI mode)")
+    mode.add_argument("--init", nargs="?", const=DEFAULT_VERSION, metavar="VERSION",
+                      help=f"add a version field where missing (default {DEFAULT_VERSION})")
+    ap.add_argument("--files", nargs="+", help="limit to specific card files")
+    args = ap.parse_args()
+
+    files = {Path(f).resolve() for f in args.files} if args.files else None
+    cards = discover(files)
+    if not cards:
+        print("No cards found.", file=sys.stderr)
+        return 1
+
+    if args.check:
+        print("Checking version snapshots...")
+        return 1 if check(cards) else 0
+    if args.init is not None:
+        print(f"Initialising version fields (default {args.init})...")
+        init(cards, args.init)
+        return 0
+    print("Materialising version snapshots...")
+    materialise(cards)
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

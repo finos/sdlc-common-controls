@@ -1,5 +1,6 @@
 ---
 sequence: 10
+version: "0.1"
 title: Dependency and Transitive Supply Chain Compromise
 layout: risk
 doc-status: Draft
@@ -20,7 +21,6 @@ related_risks:
   - ri-8   # Unauthorised Change
   - ri-11  # Build Toolchain and Service Supply Chain Compromise
 ---
-
 ## Summary
 
 Malicious, tampered, or subverted software packages — including open source libraries, transitive dependencies, container base images, and language-specific registry artefacts — enter the software development lifecycle and propagate into production, enabling attackers to execute code within the organisation's applications without directly compromising its own systems.

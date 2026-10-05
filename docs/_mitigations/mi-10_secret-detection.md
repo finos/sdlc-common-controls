@@ -1,5 +1,6 @@
 ---
 sequence: 10
+version: "0.1"
 title: Secret Detection
 layout: mitigation
 doc-status: Draft
@@ -18,7 +19,6 @@ related_mitigations:
   - mi-11  # Vulnerability Remediation SLAs
   - mi-12  # Deployment Gating
 ---
-
 ## Summary
 
 Secret detection identifies hardcoded credentials, API keys, tokens, and passwords in source code, configuration files, and version control history, preventing credential exposure and unauthorised access.

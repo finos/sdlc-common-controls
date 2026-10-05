@@ -1,5 +1,6 @@
 ---
 sequence: 5
+version: "0.1"
 title: Audit and Compliance Evidence Failure
 layout: risk
 doc-status: Draft
@@ -19,7 +20,6 @@ related_risks:
   - ri-7   # Configuration Drift
   - ri-8   # Unauthorised Change
 ---
-
 ## Summary
 
 An organisation cannot produce, on demand and for any point in time within the required retention period, the records that demonstrate its SDLC governance operated as intended — including policy approvals, control design decisions, risk acceptance sign-offs, exception management, security design reviews, test evidence, and release gate outcomes — creating exposure to regulatory enforcement, failed audits, and loss of certifications essential to operating in financial services.

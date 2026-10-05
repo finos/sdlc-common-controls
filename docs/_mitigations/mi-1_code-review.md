@@ -1,5 +1,6 @@
 ---
 sequence: 1
+version: "0.1"
 title: Code Review
 layout: mitigation
 doc-status: Draft
@@ -99,7 +100,6 @@ related_mitigations:
   - mi-16  # Test Execution and Sign-Off
   - mi-12  # Deployment Gating
 ---
-
 <!--
 Licensed under the Community Specification License 1.0.
 See LICENSE and LICENSES/SPECIFICATION-LICENSE.

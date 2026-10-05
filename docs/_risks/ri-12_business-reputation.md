@@ -1,5 +1,6 @@
 ---
 sequence: 12
+version: "0.1"
 title: Business Reputation Risk from Non-Approved Software Version Releases
 layout: risk
 doc-status: Draft

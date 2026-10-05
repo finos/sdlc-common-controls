@@ -1,5 +1,6 @@
 ---
 sequence: 13
+version: "0.1"
 title: System Inventory
 layout: mitigation
 doc-status: Draft
@@ -10,7 +11,6 @@ nist-sp-800-53r5_references:
 mitigates:
   - ri-6   # Unauthorised System Access
 ---
-
 ## Summary
 
 Organizations must maintain a current, accurate inventory of all systems operating in production. Each inventory record must capture system ownership — including designation of a system manager who is an active employee — along with system criticality classification and data classification. The inventory must be linked to the developer toolchain and SDLC systems and it must be reviewed and updated on a defined cadence and upon any material change.

@@ -1,5 +1,6 @@
 ---
 sequence: 6
+version: "0.1"
 title: Unauthorised System Access
 layout: risk
 doc-status: Draft
@@ -20,7 +21,6 @@ related_risks:
   - ri-3   # Credential and Secret Exposure
   - ri-9   # Environment Breach
 ---
-
 ## Summary
 
 Individuals gain access to production environments, infrastructure, or sensitive systems without appropriate authorisation or without their access being fully recorded and auditable, undermining accountability, enabling data theft, and creating undetectable pathways for compromise.

@@ -1,5 +1,6 @@
 ---
 sequence: 11
+version: "0.1"
 title: Build Toolchain and Service Supply Chain Compromise
 layout: risk
 doc-status: Draft
@@ -20,7 +21,6 @@ related_risks:
   - ri-9   # Environment Breach
   - ri-10  # Dependency and Transitive Supply Chain Compromise
 ---
-
 ## Summary
 
 CI/CD platforms, build tools, artefact registries, signing services, or third-party SaaS services used in the software build and release path are compromised, enabling attackers to inject malicious code into production artefacts without modifying source code or declared dependencies.

@@ -1,5 +1,6 @@
 ---
 sequence: 9
+version: "0.1"
 title: Environment Breach
 layout: risk
 doc-status: Draft
@@ -17,7 +18,6 @@ related_risks:
   - ri-10  # Dependency and Transitive Supply Chain Compromise
   - ri-11  # Build Toolchain and Service Supply Chain Compromise
 ---
-
 ## Summary
 
 An external attacker gains the ability to run unauthorised workloads within an organisation's production infrastructure, establishing a persistent operational presence that enables data theft, resource abuse, and lateral movement across internal systems.
