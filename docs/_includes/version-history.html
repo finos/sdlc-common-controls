@@ -1,0 +1,37 @@
+{% comment %}
+  Version history panel for a card (mitigation or risk).
+
+  Parameters:
+    include.ref      - the card id, e.g. "mi-1" or "ri-4"
+    include.current  - the card's current version string (page.version)
+
+  Lists every sliced version of this card from the _versions collection,
+  newest first, linking to each immutable snapshot. The current version is
+  marked and is not a link (you are already viewing it on the live page).
+{% endcomment %}
+{% assign my_versions = site.versions | where: "ref", include.ref | sort: "snapshot_version" | reverse %}
+{% if my_versions.size > 0 %}
+<div class="card mb-4">
+    <div class="card-body">
+        <h2 class="h4 mb-3">
+            <i class="bi bi-clock-history me-2"></i>Version History
+        </h2>
+        <div class="list-group">
+            {% for v in my_versions %}
+            {% if v.snapshot_version == include.current %}
+            <div class="list-group-item d-flex justify-content-between align-items-center active">
+                <span>v{{ v.snapshot_version }}</span>
+                <span class="badge bg-light text-dark">current</span>
+            </div>
+            {% else %}
+            <a href="{{ v.url | prepend: site.baseurl }}"
+               class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                <span>v{{ v.snapshot_version }}</span>
+                <small class="text-muted">{{ v.snapshot_date }}</small>
+            </a>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}

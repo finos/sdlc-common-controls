@@ -1,5 +1,6 @@
 ---
 sequence: 3
+version: "0.1"
 title: Software Artifact Provenance
 layout: mitigation
 doc-status: Draft
@@ -20,7 +21,6 @@ related_mitigations:
   - mi-2  # Content Addressable Identities
   - mi-1  # Peer Source Code Review
 ---
-
 ## Summary
 
 Internally built software artifacts have known and verifiable provenance, establishing a documented chain of custody from source code commit through build and into deployment.

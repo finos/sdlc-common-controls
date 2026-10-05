@@ -67,6 +67,44 @@ For a scoped run, pass `--files`; if you also pass `--report` without a path, th
 
 Pull requests also run the readiness check in GitHub Actions for the risk and mitigation documents changed in the PR. That CI job is informative only: it highlights open items for reviewers and publishes the scoped report without blocking merges.
 
+## Versioning cards
+
+Each mitigation and risk can be queried and displayed by its version. Version
+history is stored entirely in the repository — there is no database.
+
+Every card carries a single authored field in its front matter:
+
+```yaml
+version: "0.1"
+```
+
+To **slice a new version**, bump that one line and run:
+
+```sh
+make snapshot
+```
+
+This materialises an immutable, verbatim copy of the card into the
+`docs/_versions` collection (e.g. `docs/_versions/mi-1-v0.2.md`), stamped with
+the slice date, the git commit it was taken from, and a content hash. Commit
+the new snapshot alongside the card change. Snapshots are generated artefacts —
+do not hand-edit them.
+
+On the site, each card shows a **Version History** panel linking to every
+sliced version, and each snapshot renders with a banner noting it is a historic
+version and linking back to the current one.
+
+A sliced version is frozen. If a card's content changes but its `version` was
+not bumped, the stored snapshot no longer matches and CI fails:
+
+```sh
+make snapshot-check
+```
+
+Resolve it by bumping the `version` and running `make snapshot`, or by
+restoring the card. See [VERSIONING.md](VERSIONING.md) for how the process works and
+[scripts_docs/README.md](scripts_docs/README.md) for script options.
+
 ## Running Jekyll
 
 You will need Ruby and `bundle` installed, then run the site locally using the following.

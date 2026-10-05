@@ -1,5 +1,6 @@
 ---
 sequence: 9
+version: "0.1"
 title: Component Inventory
 layout: mitigation
 doc-status: Draft
@@ -12,7 +13,6 @@ mitigates:
   - ri-7   # Configuration Drift
   - ri-10  # Dependency and Transitive Supply Chain Compromise
 ---
-
 ## Summary
 
 Component inventory provides visibility and traceability and enables fast response by maintaining an accurate, machine-readable record of what is actually shipped in each artifact.

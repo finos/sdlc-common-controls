@@ -1,5 +1,6 @@
 ---
 sequence: 22
+version: "0.1"
 title: Data Retention and Disposal
 layout: mitigation
 doc-status: Draft
@@ -26,7 +27,6 @@ related_mitigations:
   - mi-13  # System Ownership
   - mi-20  # Requirements Approval
 ---
-
 ## Summary
 
 The organisation must retain the governance and compliance evidence its SDLC controls generate, such as review outcomes, test evidence, scan results, approval records, deployment records, build artefacts, and audit logs, for at least as long as regulatory, contractual, and audit obligations require, and must keep those records immutable for that period so they can be produced on demand and trusted as evidence.

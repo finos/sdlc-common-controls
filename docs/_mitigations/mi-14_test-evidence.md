@@ -1,5 +1,6 @@
 ---
 sequence: 14
+version: "0.1"
 title: Test Evidence Retention
 layout: mitigation
 doc-status: Draft
@@ -25,7 +26,6 @@ related_mitigations:
   - mi-5   # Vulnerability Scanning - SAST
   - mi-6   # Vulnerability Scanning - DAST
 ---
-
 ## Summary
 
 Test evidence retention ensures that automated test results are captured, linked to specific code changes, and preserved for audit, providing verifiable proof that software was tested before deployment.

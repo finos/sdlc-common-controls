@@ -1,5 +1,6 @@
 ---
 sequence: 8
+version: "1.0"
 title: Version Control
 layout: mitigation
 doc-status: First-Reading-Approved
@@ -48,7 +49,6 @@ mitigates:
   - ri-1   # Insider Threat
   - ri-8   # Unauthorised Change
 ---
-
 ## Summary
 Software and configuration must be stored within an approved version control system.
 

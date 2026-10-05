@@ -1,5 +1,6 @@
 ---
 sequence: 20
+version: "0.1"
 title: Requirements Approval for Release
 layout: mitigation
 doc-status: Draft
@@ -13,7 +14,6 @@ related_mitigations:
   - mi-4   # Requirements Repository
   - mi-19  # Version Release Approval Gating
 ---
-
 ## Summary
 
 The requirements forming the scope of a release must be explicitly reviewed and agreed by accountable stakeholders representing the business needs of the specific release of the product before that release proceeds to production.

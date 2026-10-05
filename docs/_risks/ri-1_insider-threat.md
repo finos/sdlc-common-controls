@@ -1,5 +1,6 @@
 ---
 sequence: 1
+version: "1.0"
 title: Insider Threat
 layout: risk
 doc-status: Working-Group-Approved

@@ -61,6 +61,14 @@ This directory contains scripts for downloading external references, processing 
    - Requires: `pip install PyYAML`
    - Usage: `python readiness-check --report readiness-report.md`, `python readiness-check --files docs/_risks/ri-1_insider-threat.md`, `python readiness-check --update-checksums`, or `make readiness`
 
+## version-snapshot
+   - Materialises an immutable, per-card version history into the `docs/_versions` Jekyll collection, so every mitigation and risk can be queried and displayed by its version — all in-repo, no database.
+   - Each card carries one authored field in its front matter, `version: "0.1"`. To slice a new version you bump that single line and run the script; it writes a verbatim, frozen copy to `docs/_versions/<id>-v<version>.md`, stamped with the slice date, git commit, and a content hash.
+   - `--check` enforces immutability: if a card's content changed but its already-sliced version was not bumped, it fails (so CI can require a version bump or a restore). `--init [VERSION]` adds a `version` field to any card missing one (default `0.1`).
+   - Snapshots are generated artefacts — never hand-edit them. The site renders them via the `version` layout with a historic-version banner and a version-history panel on each live card.
+   - Requires: `pip install PyYAML`
+   - Usage: `make snapshot` (slice new versions), `make snapshot-check` (CI), `./scripts/version-snapshot --init`, or `./scripts/version-snapshot --files docs/_mitigations/mi-1_code-review.md`
+
 ---
 
 ## Legacy Scripts

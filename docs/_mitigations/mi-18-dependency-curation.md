@@ -1,5 +1,6 @@
 ---
 sequence: 18
+version: "0.1"
 title: Dependency Curation
 layout: mitigation
 doc-status: Draft
@@ -13,7 +14,6 @@ related_mitigations:
   - mi-7   # Vulnerability Scanning - Dependencies
   - mi-12  # Deployment Gating
 ---
-
 ## Summary
 
 Dependency curation protects the organisation from open-source supply chain risk by enforcing automated, policy-driven governance on every open-source package before it enters development, build, or production use across the SDLC, much like a firewall.

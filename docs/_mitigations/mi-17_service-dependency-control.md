@@ -1,5 +1,6 @@
 ---
 sequence: 17
+version: "0.1"
 title: Service Dependency Control
 layout: mitigation
 doc-status: Draft
@@ -16,7 +17,6 @@ related_mitigations:
   - mi-9   # Component Inventory
   - mi-7   # Vulnerability Scanning - Dependencies
 ---
-
 ## Summary
 
 Service Dependency Mapping provides visibility into how services and external APIs interact across systems and applications. It enables faster incident response, coordinated remediation, and reduced operational risk by maintaining an accurate, up-to-date view of runtime dependencies and their relationships at both service and application levels.

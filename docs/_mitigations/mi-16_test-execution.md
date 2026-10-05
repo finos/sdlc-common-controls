@@ -1,5 +1,6 @@
 ---
 sequence: 16
+version: "0.1"
 title: Test Execution and Sign-Off
 layout: mitigation
 doc-status: Draft
@@ -23,7 +24,6 @@ related_mitigations:
   - mi-5   # Vulnerability Scanning - SAST
   - mi-6   # Vulnerability Scanning - DAST
 ---
-
 ## Summary
 
 Required appropriate testing as defined by the testing policy ([SDLC-PREV-015]({% link _mitigations/mi-15_testing-requirements.md %})) must be executed before any change is released to production. Human review and sign-off is required only when test failures occur or when the testing policy cannot be fully satisfied.

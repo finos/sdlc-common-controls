@@ -1,5 +1,6 @@
 ---
 sequence: 3
+version: "0.1"
 title: Credential and Secret Exposure
 layout: risk
 doc-status: Draft
@@ -15,7 +16,6 @@ related_risks:
   - ri-1   # Insider Threat
   - ri-6   # Unauthorised System Access
 ---
-
 ## Summary
 
 Sensitive authentication material — such as API keys, database passwords, service account tokens, encryption keys, or certificates — is inadvertently or deliberately exposed in locations where it can be accessed by unauthorised parties, enabling compromise of production systems, customer data, and internal infrastructure.

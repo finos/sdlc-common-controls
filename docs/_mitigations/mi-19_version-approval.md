@@ -1,5 +1,6 @@
 ---
 sequence: 19
+version: "0.1"
 title: Version Release Approval Gating
 layout: mitigation
 doc-status: Draft
@@ -12,7 +13,6 @@ related_mitigations:
   - mi-12  # Deployment Gating
 
 ---
-
 ## Summary
 
 Version Release Approval Gating ensures that no software version is promoted to production without passing a defined approval workflow, enforced either by designated human approvers, automated policy checks, or a combination of both. It establishes a verifiable, auditable gate at the version level—distinct from per-deployment gates—that confirms the release candidate has satisfied all governance, quality, and risk requirements before any deployment is permitted.

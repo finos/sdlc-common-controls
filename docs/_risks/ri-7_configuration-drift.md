@@ -1,5 +1,6 @@
 ---
 sequence: 7
+version: "0.1"
 title: Configuration Drift
 layout: risk
 doc-status: Draft
@@ -17,7 +18,6 @@ related_risks:
   - ri-4   # Vulnerable Software in Production
   - ri-8   # Unauthorised Change
 ---
-
 ## Summary
 
 The actual state of infrastructure, application configuration, or deployment environments diverges from the known, approved, and version-controlled state, creating a growing gap between what the organisation believes is running and what is actually deployed.

@@ -1,5 +1,6 @@
 ---
 sequence: 21
+version: "0.1"
 title: Infrastructure Dependencies
 layout: mitigation
 doc-status: Draft
@@ -64,7 +65,6 @@ related_mitigations:
   - mi-9   # Component Inventory
   - mi-17  # Service Dependency Control
 ---
-
 ## Summary
 
 Infrastructure Dependencies provides visibility into the infrastructure resources required to host and operate a software system. By maintaining an accurate inventory of the compute, network, and storage resources a given software system requires, we can better manage the system throughout its lifecycle. This improves operational visibility, supports security and compliance activities, and reduces the risk associated with unmanaged or unknown infrastructure requirements. The primary goal is to ensure that each software system is supported by the appropriate infrastructure and that those infrastructure requirements are understood and governed throughout the software lifecycle.

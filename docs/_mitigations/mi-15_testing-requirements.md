@@ -1,5 +1,6 @@
 ---
 sequence: 15
+version: "0.1"
 title: Testing Requirements
 layout: mitigation
 doc-status: Draft
@@ -22,7 +23,6 @@ related_mitigations:
   - mi-6   # Vulnerability Scanning - DAST
   - mi-7   # Vulnerability Scanning - Dependencies
 ---
-
 ## Summary
 
 A testing policy must be defined that specifies the categories and scope of testing required before any change is released to production, proportionate to the risk profile of the change.

@@ -1,5 +1,6 @@
 ---
 sequence: 12
+version: "0.1"
 title: Deployment Gating
 layout: mitigation
 doc-status: Draft
@@ -25,7 +26,6 @@ related_mitigations:
   - mi-16  # Test Execution and Sign-Off
   - mi-14  # Test Evidence Retention
 ---
-
 ## Summary
 
 Deployment gating blocks promotion of software to the target environment when defined control criteria are not met.

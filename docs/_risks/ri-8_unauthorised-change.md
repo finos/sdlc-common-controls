@@ -1,5 +1,6 @@
 ---
 sequence: 8
+version: "0.1"
 title: Unauthorised Change
 layout: risk
 doc-status: Draft
@@ -18,7 +19,6 @@ ffiec-itbooklets_references:
 related_risks:
   - ri-1   # Insider Threat
 ---
-
 ## Summary
 
 Unauthorised changes to source code, configuration, or build artefacts represent a significant risk to the integrity of software systems. Such changes may be introduced deliberately by malicious actors or inadvertently through inadequate controls, and can result in the deployment of compromised or untested software into production environments.

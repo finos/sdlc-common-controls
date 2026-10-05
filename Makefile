@@ -1,4 +1,4 @@
-.PHONY: build run clean readiness data data-nist data-ffiec data-owasp data-eu-ai-act
+.PHONY: build run clean readiness snapshot snapshot-check data data-nist data-ffiec data-owasp data-eu-ai-act
 
 DOCKER_IMAGE := jekyll/jekyll
 CONTAINER_NAME := sdlc-controls-jekyll
@@ -6,7 +6,7 @@ PORT := 4000
 
 build: ## Build the Jekyll site
 	docker run --rm \
-		-v ./docs:/srv/jekyll \
+		-v $(CURDIR)/docs:/srv/jekyll \
 		$(DOCKER_IMAGE) \
 		jekyll build
 
@@ -14,7 +14,7 @@ run: ## Run the Jekyll dev server on localhost:4000
 	docker run --rm \
 		--name $(CONTAINER_NAME) \
 		-p $(PORT):$(PORT) \
-		-v ./docs:/srv/jekyll \
+		-v $(CURDIR)/docs:/srv/jekyll \
 		$(DOCKER_IMAGE) \
 		jekyll serve --host 0.0.0.0 --port $(PORT)
 
@@ -23,6 +23,12 @@ clean: ## Remove the generated _site directory and Jekyll cache
 
 readiness: ## Check document readiness and write readiness-report.md
 	python3 scripts/readiness-check --report readiness-report.md
+
+snapshot: ## Slice version snapshots for any cards whose version was bumped
+	python3 scripts/version-snapshot
+
+snapshot-check: ## Verify version snapshots are present and unchanged (CI)
+	python3 scripts/version-snapshot --check
 
 data: data-nist data-owasp data-eu-ai-act ## Regenerate regulatory reference data files (excludes FFIEC and ISO 42001, see RUNBOOK)
 

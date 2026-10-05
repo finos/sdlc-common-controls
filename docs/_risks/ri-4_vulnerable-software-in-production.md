@@ -1,5 +1,6 @@
 ---
 sequence: 4
+version: "0.1"
 title: Vulnerable Software in Production
 layout: risk
 doc-status: Draft
@@ -16,7 +17,6 @@ related_risks:
   - ri-10  # Dependency and Transitive Supply Chain Compromise
   - ri-11  # Build Toolchain and Service Supply Chain Compromise
 ---
-
 ## Summary
 
 Applications or their dependencies containing known security vulnerabilities are deployed to and remain running in production environments, exposing the organisation to exploitation by attackers who actively scan for and weaponise publicly disclosed weaknesses.
