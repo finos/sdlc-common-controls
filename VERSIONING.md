@@ -116,8 +116,12 @@ request that touches a card, a snapshot, or the script. The fix is always one of
 
 ### 1. Edit a card as normal
 
-Edit `docs/_mitigations/mi-1_code-review.md` (or any risk). Keep the `version`
-field as-is while the change is still part of the current in-progress version.
+Edit `docs/_mitigations/mi-1_code-review.md` (or any risk).
+
+Once a snapshot exists for the card's current version, that version is frozen:
+changing the card's content requires the bump in step 2. See
+[Immutability](#immutability-sliced-versions-are-frozen) for what counts as a
+content change.
 
 ### 2. When you want to freeze a version, bump it
 

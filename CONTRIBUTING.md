@@ -101,3 +101,59 @@ o	Pull requests may be closed by a Maintainer if the decision is made that it is
 **5.4.	Separate specifications and source code.** Where possible, separate specifications and source code into different repositories, with the specifications under the Community Specification License and the source code under an OSI-approved open source license.
 
 **5.5.	One specification per repository.** When developing multiple specifications, each individual specification should be in its own repository.
+
+---
+
+# Repository-specific guidance
+
+The sections above are the adopted Community Specification Contribution Policy.
+What follows is this Working Group's own practical guidance, as permitted by
+"Additional or alternate contribution policies may be adopted and documented by
+the Working Group" above.
+
+## Changing a control or risk card
+
+Cards are the Markdown files in `docs/_mitigations/` and `docs/_risks/`. Two
+checks run on pull requests that touch them. Neither is currently configured as
+a required status check, so a failing check does not by itself stop a merge.
+
+**Readiness check.** Reports whether a card meets the criteria for
+Working-Group approval: required sections, cross-references that resolve, and,
+for mitigations, at least one regulatory mapping. It always exits 0, so it is
+informative only.
+
+```sh
+make readiness
+```
+
+That writes `readiness-report.md`, which is tracked in git, so it can leave a
+modified file in your tree. Restore it before committing, unless updating it is
+part of your change.
+
+**Version snapshot check.** Each card declares a `version`, and
+`docs/_versions/` holds a frozen copy of the card at that version. Once a
+snapshot exists for a card's current version, changing that card's content
+makes the frozen copy disagree, and the check fails.
+
+```sh
+make snapshot-check
+```
+
+Every card currently has a snapshot, so a content change needs a version bump:
+
+1. Change `version:` in the card's front matter, for example `"0.1"` to `"0.2"`.
+2. Run `make snapshot` to write the new frozen copy.
+3. Commit that copy alongside your card change.
+
+A brand-new card needs a `version` field before it can be sliced.
+`python3 scripts/version-snapshot --init` adds one.
+
+Run `make snapshot-check` before pushing. It checks the whole catalogue, so it
+can also report cards you did not touch.
+
+Snapshots are generated. Do not hand-edit them.
+
+Both scripts need PyYAML. CI runs them on Python 3.11.
+
+See [VERSIONING.md](VERSIONING.md) for how versioning works and why, and
+[README.md](README.md) for the rest of the repository's tooling.
