@@ -36,7 +36,7 @@ Unlike insider threat, which focuses on the actor, unauthorised change focuses o
 
 The consequences of unauthorised change can be severe: malicious code may reach production undetected, compliance audit trails may be broken, and the organisation may be unable to demonstrate the integrity of its software at any given point in time.
 
-## Consequences
+### Consequences
 
 * **Integrity compromise** — Untrusted or malicious code may be deployed into production systems, potentially affecting customers, counterparties, or financial markets.
 * **Regulatory breach** — Inability to demonstrate controlled change management processes may constitute a breach of FFIEC, SOX, or PCI DSS requirements.

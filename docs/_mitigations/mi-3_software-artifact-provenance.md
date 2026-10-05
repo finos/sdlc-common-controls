@@ -53,3 +53,10 @@ By linking the cryptographic identity of an artifact (from content addressable i
 * Periodically audit provenance records against running deployments to confirm that all production artifacts have known origins
 * Distinguish between human-friendly identifiers (semantic versioning, commit references) for navigation and cryptographic hashes for security and compliance purposes
 * Where human-readable identifiers are used, they should ideally be mapped to their corresponding cryptographic identities in an immutable way, such that the mapping itself cannot be altered or reassigned after the fact
+
+## Links
+
+- [SLSA Provenance (v1.0)](https://slsa.dev/spec/v1.0/provenance)
+- [SLSA specification (v1.0)](https://slsa.dev/spec/v1.0/)
+- [in-toto](https://in-toto.io/)
+- [in-toto Attestation specification](https://github.com/in-toto/attestation/tree/master/spec)
