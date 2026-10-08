@@ -49,6 +49,7 @@ layout: default
         <div class="col-lg-4">
             {% assign card_ref = "mi-" | append: page.sequence %}
             {% include version-history.html ref=card_ref current=page.version %}
+            {% include cite-version.html card=page ref=card_ref version=page.version %}
 
             <div class="card mb-4">
                 <div class="card-body">

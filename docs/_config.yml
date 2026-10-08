@@ -4,6 +4,10 @@ version: pre-alpha
 release-date: 2025-09-23
 baseurl: ""
 
+# Canonical public address, used for citation links. Kept separate from `url`
+# because `jekyll serve` overrides `url` with the local server address.
+public_url: "https://sdlc-common-controls.finos.org"
+
 risk_classification:
   OP: Operational
   SEC: Security
