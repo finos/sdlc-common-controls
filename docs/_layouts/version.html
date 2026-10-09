@@ -76,6 +76,10 @@ layout: default
 
         <div class="col-lg-4">
             {% include version-history.html ref=page.ref current=page.snapshot_version %}
+            {% comment %} Controls are what adopters cite; risks are supporting material. {% endcomment %}
+            {% if page.ref_collection == "mitigations" %}
+            {% include cite-version.html card=page ref=page.ref version=page.snapshot_version %}
+            {% endif %}
 
             <div class="card mb-4">
                 <div class="card-body">

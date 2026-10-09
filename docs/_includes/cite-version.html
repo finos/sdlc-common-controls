@@ -1,0 +1,27 @@
+{% comment %}
+  "Cite this version" panel: a ready-to-copy reference that pins a card to an
+  immutable snapshot URL, so citations do not drift when the live card changes.
+
+  Parameters:
+    include.card     - the card or snapshot page (needs type and sequence)
+    include.ref      - the card id, e.g. "mi-1"
+    include.version  - the version to cite, e.g. "1.0"
+{% endcomment %}
+{% assign cite_snapshot = site.versions | where: "ref", include.ref | where: "snapshot_version", include.version | first %}
+{% if cite_snapshot %}
+{% assign cite_number = "00" | append: include.card.sequence | slice: -3, 3 %}
+{% assign cite_id = "SDLC-" | append: include.card.type | append: "-" | append: cite_number %}
+{% assign cite_url = cite_snapshot.url | prepend: site.baseurl | prepend: site.public_url %}
+<div class="card mb-4">
+    <div class="card-body">
+        <h2 class="h4 mb-3">
+            <i class="bi bi-quote me-2"></i>Cite This Version
+        </h2>
+        <p class="small text-muted mb-2">
+            This link always shows v{{ include.version }} exactly as published, even after the card changes.
+        </p>
+        <pre class="small bg-light border rounded p-2 mb-2 text-wrap">{{ cite_id }} v{{ include.version }}, {{ include.card.title }}. FINOS SDLC Common Controls Catalog. {{ cite_url }}</pre>
+        <a href="{{ site.baseurl }}/using-the-catalog.html#citing-a-control" class="small">How to cite controls</a>
+    </div>
+</div>
+{% endif %}
