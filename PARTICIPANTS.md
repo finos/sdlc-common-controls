@@ -11,7 +11,7 @@ Below is the list of [participants](GOVERNANCE.md#1-roles) in the SDLC Common Co
 - Marko Bevc, Kosli, Sep/28/2026
 - Paul Cavanagh, Adaptavist, Sep/28/2026
 - Aaron Searle, Morgan Stanley, Sep/29/2026
-- 
+- Carmit Hershman, JFrog, Oct/12/2026
 - 
 - 
 -  
