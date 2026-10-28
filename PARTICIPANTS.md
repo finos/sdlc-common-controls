@@ -12,7 +12,7 @@ Below is the list of [participants](GOVERNANCE.md#1-roles) in the SDLC Common Co
 - Paul Cavanagh, Adaptavist, Sep/28/2026
 - Aaron Searle, Morgan Stanley, Sep/29/2026
 - Germán Fuentes Capella, Independent, Oct/19/2026
-- 
+- Anupriya Goyal, Individual Contributor, Oct/28/2026
 - 
 -  
 - 
