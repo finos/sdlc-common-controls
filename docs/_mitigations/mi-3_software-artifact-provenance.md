@@ -1,9 +1,9 @@
 ---
 sequence: 3
-version: "0.1"
+version: "1.0"
 title: Software Artifact Provenance
 layout: mitigation
-doc-status: Draft
+doc-status: Working-Group-Approved
 type: PREV
 phase: BUILD
 nist-sp-800-53r5_references:
@@ -34,9 +34,10 @@ By linking the cryptographic identity of an artifact (from content addressable i
 ## Requirements
 
 * Each artifact MUST be traceable back to a specific source code commit, build process, and build environment
+* Each artifact MUST be produced by an authorised build process
 * Provenance records MUST be created at build time and be immutable once written
 * Provenance records MUST include:
-  * Cryptographic hash of the output artifact
+  * Cryptographic identity of the output artifact
   * Source commit reference
   * Sufficient build environment context to support traceability, for example:
     * Build system URL
@@ -50,6 +51,5 @@ By linking the cryptographic identity of an artifact (from content addressable i
 * No artifact should be deployed to production without a corresponding provenance record
 * Use a dedicated provenance store or attestation service to maintain build records independently of the CI/CD system
 * Implement deployment gates that verify an artifact has a valid provenance record before allowing promotion to production environments
-* Periodically audit provenance records against running deployments to confirm that all production artifacts have known origins
 * Distinguish between human-friendly identifiers (semantic versioning, commit references) for navigation and cryptographic hashes for security and compliance purposes
 * Where human-readable identifiers are used, they should ideally be mapped to their corresponding cryptographic identities in an immutable way, such that the mapping itself cannot be altered or reassigned after the fact
