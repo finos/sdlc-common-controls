@@ -1,8 +1,8 @@
 ---
 sequence: 2
-version: "0.3"
+version: "1.0"
 title: Content Addressable Identities
-doc-status: First-Reading-Approved
+doc-status: Working-Group-Approved
 type: PREV
 phase: META
 nist-sp-800-53r5_references:
@@ -25,10 +25,10 @@ layout: version
 ref: mi-2
 ref_collection: mitigations
 source_layout: mitigation
-snapshot_version: "0.3"
+snapshot_version: "1.0"
 snapshot_date: 2026-11-03
-snapshot_commit: 8480a30
-source_sha256: 3e84c7d79022d248f55dbf84fd04dc04d79045463db162b30bd8bd8f12a45970
+snapshot_commit: a5a3e3d
+source_sha256: 781a771ec180f4cd42a976d72e4a6d6b1e7014848750f856f9dbea5d5d69c09e
 ---
 ## Summary
 

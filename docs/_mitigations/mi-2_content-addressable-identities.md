@@ -1,9 +1,9 @@
 ---
 sequence: 2
-version: "0.3"
+version: "1.0"
 title: Content Addressable Identities
 layout: mitigation
-doc-status: First-Reading-Approved
+doc-status: Working-Group-Approved
 type: PREV
 phase: META
 nist-sp-800-53r5_references:
