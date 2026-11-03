@@ -88,6 +88,13 @@
     interchangeably; each mitigation references the risks it addresses. See also
     Meta control, a control whose subject is other controls rather than a risk.
 
+- term: Production
+  slug: production
+  definition: >-
+    Production is used throughout these controls to mean any controlled
+    environment that contains sensitive data or is customer facing. The exact
+    terminology may vary from organisation to organisation.
+
 - term: Provenance
   slug: provenance
   definition: >-
