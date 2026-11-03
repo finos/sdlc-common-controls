@@ -1,9 +1,9 @@
 ---
 sequence: 3
-version: "0.2"
+version: "1.0"
 title: Software Artifact Provenance
 layout: mitigation
-doc-status: Draft
+doc-status: Working-Group-Approved
 type: PREV
 phase: BUILD
 nist-sp-800-53r5_references:

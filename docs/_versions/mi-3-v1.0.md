@@ -1,8 +1,8 @@
 ---
 sequence: 3
-version: "0.2"
+version: "1.0"
 title: Software Artifact Provenance
-doc-status: Draft
+doc-status: Working-Group-Approved
 type: PREV
 phase: BUILD
 nist-sp-800-53r5_references:
@@ -24,10 +24,10 @@ layout: version
 ref: mi-3
 ref_collection: mitigations
 source_layout: mitigation
-snapshot_version: "0.2"
+snapshot_version: "1.0"
 snapshot_date: 2026-11-03
-snapshot_commit: 2f6e8d5
-source_sha256: 270c2ffbb5bde9229b547549874c034500c945dbce3eabb610a3a34bc7e6cbbd
+snapshot_commit: 2a776f5
+source_sha256: affb4d14fc052b1770cb168ea9aa289faf62cb5509be434ce3fed9d53a8e3ce7
 ---
 ## Summary
 
