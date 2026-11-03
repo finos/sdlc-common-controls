@@ -1,6 +1,6 @@
 ---
 sequence: 3
-version: "0.1"
+version: "0.2"
 title: Software Artifact Provenance
 layout: mitigation
 doc-status: Draft
@@ -34,9 +34,10 @@ By linking the cryptographic identity of an artifact (from content addressable i
 ## Requirements
 
 * Each artifact MUST be traceable back to a specific source code commit, build process, and build environment
+* Each artifact MUST be produced by an authorised build process
 * Provenance records MUST be created at build time and be immutable once written
 * Provenance records MUST include:
-  * Cryptographic hash of the output artifact
+  * Cryptographic identity of the output artifact
   * Source commit reference
   * Sufficient build environment context to support traceability, for example:
     * Build system URL
