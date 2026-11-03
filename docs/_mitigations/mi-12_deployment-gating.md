@@ -1,9 +1,9 @@
 ---
 sequence: 12
-version: "0.2"
+version: "1.0"
 title: Deployment Gating
 layout: mitigation
-doc-status: First-Reading-Approved
+doc-status: Working-Group-Approved
 type: PREV
 phase: RELEASE
 nist-sp-800-53r5_references:
@@ -29,20 +29,19 @@ related_mitigations:
 ---
 ## Summary
 
-Deployment gating blocks promotion of software to the target environment when defined control criteria are not met.
+Deployment gates block promotion of software to the target environment when defined control criteria are not met.
 
 ## Description
 
-Deployment gating enforces policy-based decisions at the point of deployment to ensure that only software meeting defined control criteria is promoted to production. Gates evaluate the posture of an artefact against the organisation's defined policies and block deployment when criteria are not met. Without deployment gates, other controls in the catalog are advisory only, and non-compliant software may reach the target environment despite known issues. In regulated financial services environments, deployment gating provides auditable evidence that organisational policy was enforced at every release.
+Deployment gates enforce the policy-based decisions at the point of deployment to ensure that only software meeting defined control criteria is promoted to production. Gates evaluate the posture of an artefact against the organisation's defined policies and block deployment when criteria are not met. Without deployment gates, other controls in the catalog are advisory only, and non-compliant software may reach the target environment despite known issues. In regulated financial services environments, deployment gating provides auditable evidence that organisational policy was enforced at every release.
 
-Deployment gating evaluates the current technical posture of an artefact at each deployment event — the same version can pass today and be blocked tomorrow as new findings emerge, scans age, or remediation timelines are breached. Whether the version itself has received organisational approval is governed by version release approval gating ([mi-19]({% link _mitigations/mi-19_version-approval.md %})); that approval state is one of the conditions a deployment gate verifies.
+Deployment gates evaluate the current control status of an artefact before each deployment event — the same version can pass today and be blocked tomorrow as new findings emerge, scans age, or remediation timelines are breached.
 
 ## Requirements
 
-* Deployment gating policies MUST be defined to specify which conditions block deployment, based on the organisation's risk appetite and regulatory requirements
-* Gating policies MUST be configurable per application or service to allow organisations to tailor risk thresholds (e.g., stricter policies for internet-facing applications, adjusted thresholds for internal tools)
-* Gate evaluation results — including pass/fail status and which checks were evaluated — MUST be retained as part of the deployment record
-* Gating policies MUST be reviewed and updated at least annually, or when significant changes to the threat landscape, regulatory requirements, or technology stack occur
+* Deployment gate policies MUST be defined to specify which conditions block deployment
+* Gate policies MAY be configurable per application or service to allow organisations to tailor risk thresholds (e.g., stricter policies for internet-facing applications, adjusted thresholds for internal tools, or by environment type)
+* Gate evaluation results, including which checks were evaluated, MUST be retained as part of the deployment record
 
 ## Examples & Commentary
 
@@ -51,6 +50,8 @@ Deployment gating evaluates the current technical posture of an artefact at each
 * **Graduated Policies:** Apply different gate strictness by environment and application criticality. A development environment might allow deployment with medium findings, while production for a customer-facing application blocks on anything high or above
 * **Visibility & Feedback:** When a deployment is blocked, provide clear and actionable feedback to the engineering team: which gate failed, what findings caused the failure, and what actions are needed to proceed. Poor feedback loops lead to frustration and incentivise workarounds
 * **Relationship to Remediation SLAs:** Deployment gating works hand-in-hand with Remediation SLAs ([mi-11]({% link _mitigations/mi-11_vulnerability-remediation-slas.md %})). SLAs define *when* findings must be remediated; gates enforce that deployments cannot proceed when those timelines are breached. For example, a high-severity SAST finding with a 7-day SLA may not block deployment on day 1, but will block it on day 8 if unresolved
+* **Versional Approval** Whether the version itself has received organisational approval is governed by version release approval gating ([mi-19]({% link _mitigations/mi-19_version-approval.md %})); that approval state is one of the conditions a deployment gate verifies.
+
 
 ## Links
 
