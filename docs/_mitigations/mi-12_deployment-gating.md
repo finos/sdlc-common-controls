@@ -1,9 +1,9 @@
 ---
 sequence: 12
-version: "0.2"
+version: "1.0"
 title: Deployment Gating
 layout: mitigation
-doc-status: First-Reading-Approved
+doc-status: Working-Group-Approved
 type: PREV
 phase: RELEASE
 nist-sp-800-53r5_references:
