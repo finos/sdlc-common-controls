@@ -75,37 +75,39 @@ related_mitigations:
   - mi-3   # Software Artifact Provenance
   - mi-1   # Code Review
 ---
+## Summary
 
-### Summary
+Release approval decides whether a named version has the organisational approval to be released at all.
 
-Release Approval decides whether a named version has the organisational approval to be released at all.
+## Description
 
-### Description
-
-Where a system requires an explicit decision before release, for legal, regulatory, timing or risk reasons , release approval gates record that decision against a specific version, following the organisation's change management policy.
+Some changes need an explicit decision before release, for legal, regulatory, timing or risk reasons. Release approval records that decision against a specific version, following the organisation's change management policy.
 
 The decision can be made by named people, by a policy engine acting under an accountable individual, or by both. The organisation chooses which, based on the risk of the change. Either way, there must be a clear record of who or what approved which version, and under what rules.
 
-### Requirement
+Approval is granted once per version, not per deployment. A version stays approved until the approval expires or is revoked.
 
-1. There MUST be a record of the release approval that includes the named approvers and the specific versions or defined changes to the target environment. 
-2. Release approval SHOULD be time bound
-3. Environment changes MUST be technically prevented while the required approval is absent or has been revoked.
-4. The approval process MUST define the preconditions, approver roles and checks required.
-5. Automated approvals MUST be attributed to an identified policy engine, a policy version and an accountable individual.
-6. Approval SHOULD be bound to an immutable, content-addressable identity for the released version; approval of one version MUST NOT be transferable to another.
-7. An approver MUST NOT be an author of the change
+## Requirements
 
+* The approval process MUST define the preconditions, approver roles and checks required, including which changes may be approved automatically
+* There MUST be a record of each approval, naming the approvers and the specific version or change approved
+* Automated approvals MUST record the policy engine, the policy version and an accountable individual
+* Approval MUST apply only to the version approved and MUST NOT carry over to another version
+* An approver MUST NOT be an author of the change
+* Environment changes MUST be blocked while the required approval is missing or has been revoked
+* Approval SHOULD be time-bound
+* Approval SHOULD be bound to an immutable, content-addressable identity for the version (e.g., an artefact digest)
 
-### Examples and commentary
+## Examples & Commentary
 
-**CAB-gated release (high tier).** For a high-criticality payment processing service, the release workflow requires approval from a release manager and a risk officer before the pipeline may deploy any build to production. The CAB review is documented in the ITSM system against the specific version identity, and the deployment pipeline queries the ITSM API to confirm approval state before executing any production deployment steps.
-**Automated approval (low tier).** For a lower-risk internal tooling service, a policy engine confirms that the candidate met its deployment gate criteria (mi-12), that code review is complete (mi-1) and that build provenance is verified (mi-3). When all preconditions pass, the policy engine issues a signed approval record carrying its identity and policy version, which the deployment pipeline accepts as authorisation to proceed.
-**Tiered approval by change risk.** An organisation classifies changes as standard or significant. Standard changes (low-risk, well-understood) may be approved by automated policy checks alone. Significant changes require a named release manager sign-off in addition to automated checks.
-**Agent-influenced change (medium tier).** A release includes commits produced by an AI coding agent. The policy engine confirms that an agentic provenance record (SDLC-PREV-023) exists for each agent-influenced commit and that each commit was reviewed by a named individual. A named release manager then approves the version. 
-**Approval binding to artefact digest.** To prevent version substitution attacks or accidental promotion of a different build, approval is recorded against the digest of the release artefact rather than a version label alone. The enforcement point verifies both that the version label matches an approved record and that the artefact digest matches the digest recorded at approval time.
-**Enforcement mechanisms.** Technical prevention of unapproved deployment may be implemented in the deployment pipeline, in the deployment platform's environment protection rules, in an ITSM integration that locks deployment jobs pending change-record approval, or in a policy engine fronting the production environment. The control requires the prevention property, not any particular mechanism.
-**Revocation.** If a vulnerability is discovered in a version that has been approved but not yet fully deployed, the approval can be revoked in the system of record. Further deployments of that version are rejected until a new approval is granted for a remediated build.
+* **Relationship to Deployment Gating:** Release approval is about the version. Deployment gating ([mi-12]({% link _mitigations/mi-12_deployment-gating.md %})) is about each deployment. Deployment gates check that approval is still in place before every deployment
+* **CAB-gated release (high risk):** For a payment processing service, a release manager and a risk officer must both approve before any build reaches production. The CAB (Change Advisory Board) review is recorded in the ITSM (IT service management) system against the specific version. The pipeline checks approval state through the ITSM API before any production deployment step runs
+* **Automated approval (low risk):** For an internal tooling service, a policy engine checks that the candidate passed its deployment gates ([mi-12]({% link _mitigations/mi-12_deployment-gating.md %})), that code review is complete ([mi-1]({% link _mitigations/mi-1_code-review.md %})) and that build provenance is verified ([mi-3]({% link _mitigations/mi-3_software-artifact-provenance.md %})). If all checks pass, the engine issues a signed approval record with its identity and policy version. The pipeline accepts this record as authorisation to deploy
+* **Tiered approval by change risk:** An organisation classifies changes as standard or significant. Standard changes (low risk, well understood) can be approved by automated checks alone. Significant changes also need sign-off from a named release manager
+* **Agent-influenced change (medium risk):** A release includes commits written by an AI coding agent. The policy engine checks that each agent-influenced commit has an agentic provenance record ([mi-23]({% link _mitigations/mi-23_agentic-processes-provenance.md %})) and was reviewed by a named person. A named release manager then approves the version
+* **Binding approval to the artefact digest:** Recording approval against a version label alone lets a different build be promoted under the same label, by accident or as an attack. Recording the artefact digest at approval time prevents this. The enforcement point checks that both the label and the digest match the approved record
+* **Enforcement mechanisms:** Deployment can be blocked in the pipeline, in the deployment platform's environment protection rules, by an ITSM integration that locks deployment jobs until the change record is approved, or by a policy engine in front of production. The control requires that deployment is blocked, not any particular way of blocking it
+* **Revocation:** If a vulnerability is found in an approved version that isn't fully deployed yet, the approval can be revoked in the system of record. Further deployments of that version are rejected until a remediated build is approved
 
 ## Links
 
