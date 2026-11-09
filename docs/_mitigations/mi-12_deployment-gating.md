@@ -41,7 +41,7 @@ Deployment gates evaluate the current control status of an artefact before each 
 
 * Deployment gate policies MUST be defined to specify which conditions block deployment
 * Gate policies MAY be configurable per application or service to allow organisations to tailor risk thresholds (e.g., stricter policies for internet-facing applications, adjusted thresholds for internal tools, or by environment type)
-* Gate evaluation results, including which checks were evaluated, MUST be retained as part of the deployment record
+* Gate evaluation results, including which checks were evaluated, the version of those checks and their inputs MUST be retained as part of the deployment record
 
 ## Examples & Commentary
 
