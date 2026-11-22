@@ -8,6 +8,7 @@ type: PREV
 nist-sp-800-53r5_references:
   - sr-3   # SR-3 Supply Chain Controls and Processes
 mitigates:
+  - ri-9  # Environment Breach
   - ri-10  # Dependency and Transitive Supply Chain Compromise
 related_mitigations:
   - mi-9   # Component Inventory

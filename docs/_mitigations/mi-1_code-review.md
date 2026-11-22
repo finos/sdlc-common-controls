@@ -88,6 +88,7 @@ us-nydfs_references:
       is a central component of those procedures, and supports the covered
       entity's annual certification.
 mitigates:
+  - ri-1   # Insider Threat
   - ri-8   # Unauthorised Change
   - ri-4   # Vulnerable Software in Production
   - ri-5   # Audit and Compliance Evidence Failure

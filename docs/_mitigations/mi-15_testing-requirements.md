@@ -13,8 +13,8 @@ nist-sp-800-53r5_references:
   - sa-15  # SA-15 Development Process, Standards, And Tools
   - cm-4   # CM-4 Impact Analyses
 mitigates:
-  - ri-4   # Vulnerable Software in Production
   - ri-5   # Audit and Compliance Evidence Failure
+  - ri-23  # Business Reputation Risk from Non-Approved Software Version Releases
 related_mitigations:
   - mi-16  # Test Execution and Sign-Off
   - mi-14  # Test Evidence Retention
