@@ -50,7 +50,7 @@ The Working Group uses pull requests to track changes. To submit a change to the
 
 **3.1	Fork the Repo, modify the Specification to Address the Issue.**
 
-**3.2.	Submit a Pull Request.** The pull request description must contain the content of the [pull request template](.github/pull_request_template.md), which records agreement with the [Contributor License Agreement](governance-documents/CS_Contributor_License_Agreement.md).
+**3.2.	Submit a Pull Request.** The [EasyCLA](https://easycla.lfx.linuxfoundation.org/) check on the pull request records agreement with the [Contributor License Agreement](governance-documents/CS_Contributor_License_Agreement.md).
 
 ## 4.	Pull Request Workflow.
 

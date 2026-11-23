@@ -50,7 +50,7 @@ _:question:Please email help@finos.org if you encounter issues or have questions
 
 [<img src="https://user-images.githubusercontent.com/51138318/151392480-86b526ec-53c2-47ef-8807-d9442f3f4d04.png" width="500">](https://user-images.githubusercontent.com/51138318/151392480-86b526ec-53c2-47ef-8807-d9442f3f4d04.png) 
     
-**Step 5.3. Choose a title for your Pull Request, add your name and the project name, and then click on "Create Pull Request"**
+**Step 5.3. Choose a title for your Pull Request, copy the [participant statement](.github/PULL_REQUEST_TEMPLATE/participant.md) into the description, add your name and organization, and then click on "Create Pull Request"**
 
 [<img src="https://user-images.githubusercontent.com/51138318/151393034-bde9e089-6b75-4829-9f7e-f7c2f20dcef1.png" width="500">](https://user-images.githubusercontent.com/51138318/151393034-bde9e089-6b75-4829-9f7e-f7c2f20dcef1.png) 
 
