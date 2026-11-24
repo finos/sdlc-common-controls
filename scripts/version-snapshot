@@ -222,10 +222,18 @@ def check(cards: list[Card]) -> int:
         front, _ = split_front_matter(snap_text)
         snap_fm = parse_front_matter(front)
         stored = snap_fm.get("source_sha256")
-        if stored != card.hash:
+        rel = dest.relative_to(REPO_ROOT)
+        if not stored:
+            print(
+                f"  ! {card.id}: {rel} has no source_sha256, so this script did not write it.\n"
+                f"      Delete it and run 'make snapshot'."
+            )
+            problems += 1
+        elif stored != card.hash:
             print(
                 f"  ! {card.id}: content changed since v{card.version} was sliced.\n"
-                f"      Bump the version (and run 'make snapshot'), or restore the card."
+                f"      Bump the version (and run 'make snapshot'), or restore the card.\n"
+                f"      If {rel} is new in your branch, delete it and run 'make snapshot' instead."
             )
             problems += 1
     if not problems:

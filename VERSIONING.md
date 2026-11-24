@@ -57,12 +57,17 @@ card into the `docs/_versions` collection, named `<id>-v<version>.md`
 | `source_layout`    | The card's original layout                          |
 | `snapshot_version` | The version this snapshot freezes                   |
 | `snapshot_date`    | The date it was sliced                              |
-| `snapshot_commit`  | The git commit it was sliced from                   |
+| `snapshot_commit`  | The git commit checked out when it was sliced       |
 | `source_sha256`    | A hash of the card's content when sliced            |
 
 Because snapshots are plain Markdown committed to the repo, they are diffable in
 pull requests, rendered statically by Jekyll, and need no database. Git remains
-the underlying source of truth — each snapshot records the commit it came from.
+the underlying source of truth.
+
+`snapshot_commit` is the commit that was checked out when the script ran. The
+workflow below slices before committing, so this is normally the commit just
+before the one that adds the snapshot. It is not the commit that holds the card
+at that version.
 
 ## Why not just use git history or tags?
 
@@ -82,20 +87,35 @@ snapshot) but publish intentional, named versions as static pages.
 
 ## Immutability: sliced versions are frozen
 
-Once a version is sliced, its snapshot must not change. The tool enforces this:
+Once a version is sliced, the card's content at that version must not change.
+A check guards this:
 
 - `source_sha256` records the card's content at slice time.
 - `scripts/version-snapshot --check` recomputes the hash for each card's current
-  version and compares it to the stored snapshot.
+  version and compares it to the `source_sha256` stored in that version's
+  snapshot.
 - If a card's content changed but its `version` was **not** bumped, the check
-  fails with a clear message.
+  fails.
+
+The check reads only the live card and the `source_sha256` line of its current
+snapshot. It does not detect a hand edit to the rest of a snapshot file, and it
+does not look at snapshots of older versions. Reviewers should treat any change
+to an existing file in `docs/_versions/` as a mistake.
 
 This runs in CI (`.github/workflows/version-snapshot-check.yml`) on every pull
-request that touches a card, a snapshot, or the script. The fix is always one of:
+request that touches a card, a snapshot, or the script. The fix is one of:
 
-1. **Bump the version** (`version: "0.2"`) and run `make snapshot` — if the
+1. **Bump the version** (`version: "0.2"`) and run `make snapshot`, if the
    change is a genuine new version; or
-2. **Restore the card** — if the change was accidental.
+2. **Restore the card**, if the change was accidental; or
+3. **Delete the snapshot and run `make snapshot` again**, if the snapshot is
+   new in your branch. This is the fix when you sliced a version and then
+   edited the card again before merging, for example after review feedback.
+   `make snapshot` never overwrites a snapshot that already exists, so running
+   it again on its own prints `nothing to slice` and changes nothing.
+
+Never write a snapshot by hand, even as a copy of the card. A copy has no
+`source_sha256`, so the check fails. Delete it and run `make snapshot`.
 
 > The hash is computed from the *parsed* front matter plus the body, so
 > comment-only or whitespace-only reformatting of the front matter does not
@@ -113,6 +133,17 @@ request that touches a card, a snapshot, or the script. The fix is always one of
 ---
 
 ## Everyday workflow
+
+### Before you start
+
+The script needs Python 3 and PyYAML:
+
+```sh
+python3 -m pip install PyYAML
+```
+
+Without PyYAML, `make snapshot` stops with
+`ModuleNotFoundError: No module named 'yaml'`.
 
 ### 1. Edit a card as normal
 
@@ -139,6 +170,10 @@ make snapshot
 
 This writes `docs/_versions/mi-1-v0.2.md`. Commit it together with your card
 change.
+
+If you change the card again before your pull request merges, delete that file
+and run `make snapshot` again. See fix 3 under
+[Immutability](#immutability-sliced-versions-are-frozen).
 
 ### 4. Verify (optional locally; automatic in CI)
 
