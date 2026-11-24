@@ -1,6 +1,6 @@
 ---
 sequence: 15
-version: "0.2"
+version: "0.3"
 title: Testing Requirements
 layout: mitigation
 doc-status: First-Reading-Approved

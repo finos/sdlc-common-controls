@@ -1,6 +1,6 @@
 ---
 sequence: 18
-version: "0.2"
+version: "0.3"
 title: Dependency Curation
 layout: mitigation
 doc-status: First-Reading-Approved

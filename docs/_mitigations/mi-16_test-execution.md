@@ -1,6 +1,6 @@
 ---
 sequence: 16
-version: "0.2"
+version: "0.3"
 title: Test Execution and Sign-Off
 layout: mitigation
 doc-status: First-Reading-Approved
