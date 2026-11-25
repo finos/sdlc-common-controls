@@ -16,7 +16,7 @@ nist-sp-800-53r5_references:
 mitigates:
   - ri-5   # Audit and Compliance Evidence Failure
   - ri-8   # Unauthorised Change
-  - ri-23  # Business Reputation Risk from Non-Approved Software Version Releases
+  - ri-12  # Business Reputation Risk from Non-Approved Software Version Releases
 related_mitigations:
   - mi-15  # Testing Requirements
   - mi-14  # Test Evidence Retention

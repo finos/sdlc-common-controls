@@ -11,7 +11,6 @@ nist-sp-800-53r5_references:
   - sr-4   # SR-4 Provenance
 mitigates:
   - ri-7   # Configuration Drift
-  - ri-9  # Environment Breach
   - ri-10  # Dependency and Transitive Supply Chain Compromise
 ---
 ## Summary
