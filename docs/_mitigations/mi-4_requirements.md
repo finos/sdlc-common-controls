@@ -1,11 +1,66 @@
 ---
 sequence: 4
-version: "0.1"
+version: "0.2"
 title: Requirements Repository
 layout: mitigation
 doc-status: Draft
 type: PREV
 phase: LIFECYCLE
+nist-sp-800-53r5_references:
+  - au-12  # AU-12 Audit Record Generation
+  - si-12  # SI-12 Information Management and Retention
+  - cm-3   # CM-3 Configuration Change Control
+eu-dora_references:
+  - id: rts-art-15
+    note: >
+      Art. 15(3)(f)-(g) requires the ICT project-management policy to include
+      change-management requirements and the testing of all requirements,
+      including security requirements, before production deployment;
+      Art. 15(4) adds the information and expertise of the impacted business
+      areas. The designated repository is the system of record in which those
+      requirements are captured, reconstructed at any past date, and evidenced
+      against that testing and approval.
+uk-fca_references:
+  - id: sysc-15a-2
+    note: >
+      Outcome-based rather than prescriptive: firms must be able to remain
+      within impact tolerances for important business services. Keeping every
+      requirement in an authoritative, auditable system of record supports the
+      disciplined change decisions that protect those services, and the
+      retained requirement history evidences this capability in the firm's
+      operational resilience self-assessment.
+  - id: pra-ss1-21
+    note: >
+      The PRA's parallel expectations for dual-regulated firms. Same mapping
+      logic as SYSC 15A: an authoritative requirements record with retained,
+      attributable history is evidence of the governance leg of the firm's
+      resilience capability.
+ffiec-itbooklets_references:
+  - id: dam-2
+    note: >
+      Section II expects management to establish — and the board to oversee —
+      an effective governance framework for development, acquisition, and
+      maintenance, with assigned roles and responsibilities and
+      enterprise-wide policies and standards. The named owner's cadence
+      attestation that the designated repository is in active use is that
+      governance accountability made explicit and retained as evidence.
+  - id: dam-5
+    note: >
+      The Development section expects entities to maintain and follow
+      documented development policies, standards, and procedures, and defines
+      a trustworthy system as one that meets the requirements set by
+      management. A designated requirements repository is where those
+      requirements are defined and recorded — the baseline development is
+      controlled against.
+us-nydfs_references:
+  - id: nydfs-500-13
+    note: >
+      Section 500.13(b) requires policies for the periodic secure disposal of
+      nonpublic information no longer needed, except where retention is
+      required by law or regulation. MI-4's requirement that history
+      retention cover the period required by applicable regulation and the
+      organisation's record-keeping policy sets that documented retention
+      boundary for any nonpublic information held in the repository.
 mitigates:
   - ri-5   # Audit and Compliance Evidence Failure
 chain:
