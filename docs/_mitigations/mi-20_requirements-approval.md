@@ -1,11 +1,80 @@
 ---
 sequence: 20
-version: "0.2"
+version: "0.3"
 title: Requirements Approval for Release
 layout: mitigation
 doc-status: First-Reading-Approved
 type: PREV
 phase: RELEASE
+nist-sp-800-53r5_references:
+  - cm-3   # CM-3 Configuration Change Control
+  - cm-5   # CM-5 Access Restrictions for Change
+  - ca-6   # CA-6 Authorization
+eu-dora_references:
+  - id: dora-art-9-4-e
+    note: >
+      The parent DORA obligation: documented ICT change management
+      policies adopted on a risk-based approach. Requiring the
+      business to review and agree the requirement scope of a
+      release before it proceeds is the scope-definition step of
+      that policy applied to release changes.
+  - id: rts-art-16-2
+    note: >
+      Requires ICT systems to be tested and approved before their
+      first use and before changes are deployed to the production
+      environment. Business agreement on the release's requirement
+      scope is the approval leg for a release change: it is obtained
+      before the release proceeds, so only agreed scope reaches
+      production.
+  - id: rts-art-17-1
+    note: >
+      Art. 17(1)(b) requires independence between the functions
+      approving a change and those requesting or implementing it —
+      the basis for taking release-scope approval from the business
+      owner rather than the delivery team. Art. 17(1) also requires
+      changes to be documented and verified before production; the
+      agreed requirement baseline bound to the release identifier
+      provides that record.
+uk-fca_references:
+  - id: sysc-15a-2
+    note: >
+      Outcome-based rather than prescriptive: firms must be able to
+      remain within impact tolerances for important business services.
+      Business agreement on the release's requirement scope reduces
+      the likelihood that unintended or unready change reaches those
+      services, and the retained approval records evidence this
+      capability in the firm's operational resilience self-assessment.
+  - id: pra-ss1-21
+    note: >
+      The PRA's parallel expectations for dual-regulated firms. Same
+      mapping logic as SYSC 15A: explicit business agreement on what
+      a release delivers is evidence of the change-governance leg of
+      the firm's resilience capability.
+  - id: fca-tech-change
+    note: >
+      The FCA's multi-firm review found failed technology changes
+      cause roughly a quarter of high-severity incidents, and that
+      strong governance and robust pre-deployment assurance correlate
+      with higher change success rates — directly supporting an
+      explicit, recorded business agreement on the release scope
+      before the release proceeds.
+ffiec-itbooklets_references:
+  - id: dam-2
+    note: >
+      Governance of development, acquisition, and maintenance:
+      management oversight, defined roles and responsibilities, and
+      accountability for what is built and delivered. A recorded
+      business review and agreement of the release's requirement
+      scope, by named approvers, implements that governance for each
+      release.
+  - id: dam-7
+    note: >
+      Maintenance covers change management over operational systems,
+      including expectations that changes are authorised before
+      implementation and that change records are retained. The
+      business-agreed requirement scope, bound to the release
+      identifier, is the authorisation record for the change each
+      release delivers.
 mitigates:
   - ri-12  # Business Reputation Risk from Non-Approved Software Version Releases
 chain:
