@@ -1,6 +1,6 @@
 ---
 sequence: 16
-version: "0.2"
+version: "0.3"
 title: Test Execution and Sign-Off
 layout: mitigation
 doc-status: First-Reading-Approved
@@ -14,9 +14,9 @@ nist-sp-800-53r5_references:
   - cm-4   # CM-4 Impact Analyses
   - si-2   # SI-2 Flaw Remediation
 mitigates:
-  - ri-4   # Vulnerable Software in Production
   - ri-5   # Audit and Compliance Evidence Failure
   - ri-8   # Unauthorised Change
+  - ri-12  # Business Reputation Risk from Non-Approved Software Version Releases
 related_mitigations:
   - mi-15  # Testing Requirements
   - mi-14  # Test Evidence Retention

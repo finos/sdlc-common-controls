@@ -1,6 +1,6 @@
 ---
 sequence: 9
-version: "0.2"
+version: "0.3"
 title: Component Inventory
 layout: mitigation
 doc-status: First-Reading-Approved
